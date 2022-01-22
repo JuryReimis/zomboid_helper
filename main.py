@@ -39,6 +39,10 @@ def copy_modify(zomboid_dir: str, workshop_dir: str, info_from_file: dict) -> No
         for mod in get_realpath_of_mods(workshop_dir=workshop_dir):
             print(f"Копирую {os.path.basename(mod)}")
             shutil.copytree(mod, os.path.join(zomboid_dir, "mods", os.path.basename(mod)), dirs_exist_ok=True)
+    elif len(info_from_file.keys()) >= 2:
+        for mod in get_realpath_of_mods(workshop_dir=workshop_dir, mods_filter=info_from_file.keys()):
+            print(f"Копирую {os.path.basename(mod)}")
+            shutil.copytree(mod, os.path.join(zomboid_dir, "mods", os.path.basename(mod)), dirs_exist_ok=True)
 
 
 def get_realpath_of_mods(workshop_dir: str, mods_filter=None):
@@ -72,7 +76,7 @@ def record_info_from_file(flag: bool, path: str = r"C:\Users\indli\Zomboid\mod u
             return json.load(f)
     else:
         print("Документы с информацией об обновлении не найдены")
-        return {"Отчет сделан": time.gmtime(time.time())}
+        return {"Отчет сделан": time.strftime("%Y-%m-%d %H:%M", time.gmtime(time.time()))}
 
 
 def find_dir(start_path: str, name: str = "content\\108600") -> str:
