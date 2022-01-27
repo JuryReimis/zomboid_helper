@@ -61,8 +61,8 @@ def get_realpath_of_mods(workshop_dir: str, mods_filter=None):
 
 def record_info_from_file(flag: bool, path: str = r"C:\Users\indli\Zomboid\mod updates", last=False) -> dict:
     if flag is True and not next(os.scandir(path), None) is None:
-        file_name = "default"
-        dir_creation_time = time.gmtime(os.path.getctime(path))
+        file_name = next(os.scandir(path)).path
+        dir_creation_time = time.gmtime(os.path.getctime(file_name))
         for file in os.scandir(path):
             file: os.DirEntry
             file_m_time = time.gmtime(os.path.getmtime(file.path))
